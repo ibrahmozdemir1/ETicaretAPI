@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\Infrastucture\ETicaretAPI.Persistince\ETicaretAPI.Persistince.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

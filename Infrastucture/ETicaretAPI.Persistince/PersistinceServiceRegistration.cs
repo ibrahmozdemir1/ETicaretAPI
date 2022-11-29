@@ -4,7 +4,10 @@ using ETicaretAPI.Application.Repositories.Orders;
 using ETicaretAPI.Application.Repositories.Products;
 using ETicaretAPI.Persistince.Context;
 using ETicaretAPI.Persistince.Repositories.Concrete.Customers;
+using ETicaretAPI.Persistince.Repositories.Concrete.File;
+using ETicaretAPI.Persistince.Repositories.Concrete.InvoiceFile;
 using ETicaretAPI.Persistince.Repositories.Concrete.Orders;
+using ETicaretAPI.Persistince.Repositories.Concrete.ProductImageFile;
 using ETicaretAPI.Persistince.Repositories.Concrete.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +34,12 @@ namespace ETicaretAPI.Persistince
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<IProductReadRepository, ProductReadRepository>();
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+            services.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
+            services.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+            services.AddScoped<IFileReadRepository, FileReadRepository>();
+            services.AddScoped<IFileWriteRepository, FileWriteRepository>();
+            services.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
+            services.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
         }
     }
 }
