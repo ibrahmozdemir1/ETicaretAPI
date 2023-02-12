@@ -1,8 +1,11 @@
-﻿using ETicaretAPI.Application.Repositories.Customers;
+﻿using ETicaretAPI.Application.Abstractions.Storage;
+using ETicaretAPI.Application.Repositories.Customers;
 using ETicaretAPI.Application.Repositories.Orders;
 using ETicaretAPI.Application.Repositories.Products;
-using ETicaretAPI.Application.Services;
+using ETicaretAPI.Infrastucture.Enums;
 using ETicaretAPI.Infrastucture.Services;
+using ETicaretAPI.Infrastucture.Services.Storage;
+using ETicaretAPI.Infrastucture.Services.Storage.Local;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,8 +19,28 @@ namespace ETicaretAPI.Infrastucture
     {
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IStorageService, StorageService>();
+        }
 
+        public static void AddStorage<T>(this IServiceCollection services) where T : class, IStorage
+        {
+            services.AddScoped<IStorage, T>();
+        }
+
+        public static void AddStorage(this IServiceCollection services,StorageType storageType)
+        {
+            switch (storageType)
+            {
+                case StorageType.Local:
+                    services.AddScoped<IStorage, LocalStorage>();
+                    break;
+                case StorageType.Azure:
+                    break;
+                case StorageType.AWS:
+                default:
+                    services.AddScoped<IStorage, LocalStorage>();
+                    break;
+            }
         }
     }
 }

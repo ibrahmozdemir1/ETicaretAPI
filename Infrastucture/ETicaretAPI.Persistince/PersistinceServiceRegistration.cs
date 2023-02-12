@@ -2,6 +2,7 @@
 using ETicaretAPI.Application.Repositories.Customers;
 using ETicaretAPI.Application.Repositories.Orders;
 using ETicaretAPI.Application.Repositories.Products;
+using ETicaretAPI.Domain.Entities.Identity;
 using ETicaretAPI.Persistince.Context;
 using ETicaretAPI.Persistince.Repositories.Concrete.Customers;
 using ETicaretAPI.Persistince.Repositories.Concrete.File;
@@ -28,6 +29,14 @@ namespace ETicaretAPI.Persistince
         {
 
             services.AddDbContext<ETicaretAPIDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
+            services.AddIdentity<AppUser,AppRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<ETicaretAPIDbContext>();
             services.AddScoped<IOrderReadRepository, OrderReadRepository>();
             services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
             services.AddScoped<ICostumerReadRepository, CustomerReadRepository>();
