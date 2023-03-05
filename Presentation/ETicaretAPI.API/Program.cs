@@ -15,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistinceService();
 
 builder.Services.AddAuthentication();
+builder.Services.AddHttpClient();
 
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
