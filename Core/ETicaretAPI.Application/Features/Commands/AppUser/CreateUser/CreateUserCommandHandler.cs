@@ -1,4 +1,6 @@
-﻿using ETicaretAPI.Application.Exceptions;
+﻿using ETicaretAPI.Application.Abstractions.Services;
+using ETicaretAPI.Application.Dtos.User;
+using ETicaretAPI.Application.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -11,40 +13,30 @@ namespace ETicaretAPI.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
-        readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+        readonly IUserService _userService;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
+        public CreateUserCommandHandler(IUserService userService)
         {
-            _userManager = userManager;
+            _userService = userService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, 
             CancellationToken cancellationToken)
         {
-            IdentityResult result = await _userManager.CreateAsync(new()
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserName = request.UserName,
+            CreateUserResponseDto responseDto = await _userService.CreateAsync(new() 
+            { 
                 Email = request.Email,
-                NameSurname = request.NameSurname,
-            }, request.Password);
-            
-            if(result.Succeeded)
+                Password= request.Password,
+                PasswordConfirm = request.PasswordConfirm,
+                NameSurname= request.NameSurname,
+                UserName= request.UserName,
+            });
+
+            return new()
             {
-                return new()
-                {
-                    Success = true,
-                    Message = "Kullanıcı Başarıyla Oluşturuldu."
-                };
-            }
-            else
-            {
-                return new()
-                {
-                    Success = false,
-                    Message = "Kullanıcı Kaydı Oluşturulamadı."
-                };
-            }
+                Success = responseDto.Success,
+                Message = responseDto.Message
+            };
         }
     }
 }

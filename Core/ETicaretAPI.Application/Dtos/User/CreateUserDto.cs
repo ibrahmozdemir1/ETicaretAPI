@@ -1,14 +1,12 @@
-﻿using ETicaretAPI.Application.Dtos.User;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETicaretAPI.Application.Features.Commands.AppUser.CreateUser
+namespace ETicaretAPI.Application.Dtos.User
 {
-    public class CreateUserCommandRequest : IRequest<CreateUserCommandResponse>
+    public class CreateUserDto
     {
         public string NameSurname { get; set; }
         public string Email { get; set; }

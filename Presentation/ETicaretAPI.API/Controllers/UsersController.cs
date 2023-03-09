@@ -27,35 +27,6 @@ namespace ETicaretAPI.API.Controllers
             return Ok(createUserCommandResponse);
         }
 
-        [HttpPost("[action]")]
-
-        public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
-        {
-            LoginUserCommandResponse loginUserCommandResponse =  await _mediator.Send(loginUserCommandRequest);
-
-            return Ok(loginUserCommandResponse);
-
-        }
-
-        [HttpPost("google-login")]
-
-        public async Task<IActionResult> GoogleLogin(GoogleLoginCommandRequest googleLoginCommandRequest)
-        {
-            GoogleLoginCommandResponse googleLoginCommandResponse = await _mediator.Send(googleLoginCommandRequest);
-
-            return Ok(googleLoginCommandResponse);
-
-        }
-
-        [HttpPost("facebook-login")]
-
-        public async Task<IActionResult> FacebookLogin(FacebookLoginCommandRequest facebookLoginCommandRequest)
-        {
-            FacebookLoginCommandResponse facebookLoginCommandResponse = await _mediator.Send(facebookLoginCommandRequest);
-
-            return Ok(facebookLoginCommandResponse);
-
-        }
-
+   
     }
 }
