@@ -2,7 +2,6 @@
 using ETicaretAPI.Application.Abstractions.Token;
 using ETicaretAPI.Application.Dtos;
 using ETicaretAPI.Application.Dtos.Facebook;
-using Google.Apis.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
