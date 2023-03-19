@@ -2,6 +2,7 @@
 using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
 using ETicaretAPI.Application.Features.Commands.Product.RemoveProduct;
 using ETicaretAPI.Application.Features.Commands.Product.UpdateProduct;
+using ETicaretAPI.Application.Features.Commands.ProductImageFile.ChangeShowCase;
 using ETicaretAPI.Application.Features.Commands.ProductImageFile.RemoveProductImage;
 using ETicaretAPI.Application.Features.Commands.ProductImageFile.UploadProductImage;
 using ETicaretAPI.Application.Features.Queries.Product.GetAllProduct;
@@ -23,7 +24,6 @@ namespace ETicaretAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Admin")]
     public class ProductController : ControllerBase
     {
         private readonly IProductWriteRepository _productWriteRepository;
@@ -54,6 +54,7 @@ namespace ETicaretAPI.API.Controllers
 
             return Ok(response);
         }
+
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetId([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
@@ -113,13 +114,14 @@ namespace ETicaretAPI.API.Controllers
 
             return Ok(product.ProductImageFiles.Select(p => new
             {
+                Id = p.Id,
                 Path = $"{ configuration["BaseStorageUrl"]}{p.FileName}",
                 p.FileName,
             }));
         }
 
         [HttpGet("[action]/{id}/{imageId}")]
-        public async Task<IActionResult> DeleteProductImages(string id, string imageId)
+        public async Task<IActionResult> DeleteProductImage(string id, string imageId)
         {
             Product? product = await _productReadRepository.Table.Include(p => p.ProductImageFiles)
                 .FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
@@ -130,6 +132,14 @@ namespace ETicaretAPI.API.Controllers
             product.ProductImageFiles.Remove(productImageFile);
             await _productWriteRepository.SaveAsync();
             return Ok();
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ChangeShowCaseImage([FromQuery] 
+        ChangeShowCaseImageCommandRequest changeShowCaseImageCommandRequest)
+        {
+            ChangeShowCaseImageCommandRespnse response = await _mediator.Send(changeShowCaseImageCommandRequest);
+            return Ok(response);
         }
 
     }

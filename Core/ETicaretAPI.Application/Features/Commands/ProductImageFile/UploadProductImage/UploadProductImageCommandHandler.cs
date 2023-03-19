@@ -34,7 +34,7 @@ namespace ETicaretAPI.Application.Features.Commands.ProductImageFile.UploadProdu
             await _productImageFileWriteRepository.AddRangeAsync(result.Select(d => new Domain.Entities.ProductImageFile()
             {
                 FileName = d.fileName,
-                Path = d.pathOrContainerName,
+                Path = d.fileName,
                 Storage = _storageService.StorageName,
                 Products = new List<Domain.Entities.Product>() { product }
             }).ToList());

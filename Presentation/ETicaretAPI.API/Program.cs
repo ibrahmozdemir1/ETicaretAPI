@@ -30,8 +30,10 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<LocalStorage>();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+    policy.WithOrigins("http://localhost", "http://localhost:4200", "https://localhost:7220").AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowedToAllowWildcardSubdomains()
 ));
+
+
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
     .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>()
      ).ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
@@ -101,12 +103,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapHubs();
 
 app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 app.UseStaticFiles();
 
 app.UseSerilogRequestLogging();
+
 
 app.UseHttpLogging();
 app.UseCors();
@@ -125,8 +127,8 @@ app.Use( async (context,next) =>
     await next();
 });
 
-app.UseCors();
 
 app.MapControllers();
+app.MapHubs();
 
 app.Run();

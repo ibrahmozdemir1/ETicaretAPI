@@ -139,7 +139,7 @@ namespace ETicaretAPI.Persistince.Services.AuthService
 
             if (result.Succeeded) // Authentication başarılı olmuştur...
             {
-                Token token = _tokenHandler.CreateAccessToken(5,appUser);
+                Token token = _tokenHandler.CreateAccessToken(500000000,appUser);
                 await _userService.UpdateRefreshToken(token.RefreshToken, appUser.Id, token.Expiration);
                 return token;
             }
@@ -153,7 +153,7 @@ namespace ETicaretAPI.Persistince.Services.AuthService
 
             if(user != null && user?.RefreshTokenEndDate > DateTime.UtcNow)
             {
-                Token token = _tokenHandler.CreateAccessToken(15, user);
+                Token token = _tokenHandler.CreateAccessToken(500000000, user);
 
                 await _userService.UpdateRefreshToken(token.RefreshToken,user.Id, token.Expiration);
 
