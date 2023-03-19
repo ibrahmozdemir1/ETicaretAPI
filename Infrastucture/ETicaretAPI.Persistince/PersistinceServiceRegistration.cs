@@ -1,17 +1,22 @@
 ﻿using ETicaretAPI.Application.Abstractions.Services;
 using ETicaretAPI.Application.Abstractions.Services.Authentications;
 using ETicaretAPI.Application.Repositories;
+using ETicaretAPI.Application.Repositories.Basket;
+using ETicaretAPI.Application.Repositories.BasketItem;
 using ETicaretAPI.Application.Repositories.Customers;
 using ETicaretAPI.Application.Repositories.Orders;
 using ETicaretAPI.Application.Repositories.Products;
 using ETicaretAPI.Domain.Entities.Identity;
 using ETicaretAPI.Persistince.Context;
+using ETicaretAPI.Persistince.Repositories.Concrete.Basket;
+using ETicaretAPI.Persistince.Repositories.Concrete.BasketItem;
 using ETicaretAPI.Persistince.Repositories.Concrete.Customers;
 using ETicaretAPI.Persistince.Repositories.Concrete.File;
 using ETicaretAPI.Persistince.Repositories.Concrete.InvoiceFile;
 using ETicaretAPI.Persistince.Repositories.Concrete.Orders;
 using ETicaretAPI.Persistince.Repositories.Concrete.ProductImageFile;
 using ETicaretAPI.Persistince.Repositories.Concrete.Products;
+using ETicaretAPI.Persistince.Services;
 using ETicaretAPI.Persistince.Services.AuthService;
 using ETicaretAPI.Persistince.Services.UserService;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +58,10 @@ namespace ETicaretAPI.Persistince
             services.AddScoped<IFileWriteRepository, FileWriteRepository>();
             services.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
             services.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
+            services.AddScoped<IBasketReadRepository, BasketReadRepository>();
+            services.AddScoped<IBasketWriteRepository, BasketWriteRepository>();
+            services.AddScoped<IBasketItemWriteRepository, BasketItemWriteRepository>();
+            services.AddScoped<IBasketItemReadRepository, BasketItemReadRepository>();
 
 
             services.AddScoped<IUserService, UserService>();
@@ -60,6 +69,8 @@ namespace ETicaretAPI.Persistince
 
             services.AddScoped<IExternalAuth, AuthService>();
             services.AddScoped<IInternalAuth, AuthService>();
+
+            services.AddScoped<IBasketService, BasketService>();
         }
     }
 }

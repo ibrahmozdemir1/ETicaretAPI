@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ETicaretAPI.Application.Features.Queries.Basket.GetBasketItems;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETicaretAPI.Application.Features.Queries.Basket.GetBasketItems
+namespace ETicaretAPI.Application.Features.Queries.Basket
 {
-    internal class GetBasketItemQueryRequest
+    public class GetBasketItemQueryRequest : IRequest<List<GetBasketItemQueryResponse>>
     {
     }
 }

@@ -64,7 +64,7 @@ namespace ETicaretAPI.API.Controllers
             return Ok(response);
 
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpPost]
 
         public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
@@ -72,21 +72,21 @@ namespace ETicaretAPI.API.Controllers
             CreateProductCommandResponse createProductCommandResponse = await _mediator.Send(createProductCommandRequest);
             return StatusCode((int)HttpStatusCode.Created);
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
         {
             UpdateProductCommandResponse updateProductCommandResponse = await _mediator.Send(updateProductCommandRequest);
             return Ok();
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse removeProductCommandResponse = await _mediator.Send(removeProductCommandRequest);
             return Ok();
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpPost("[action]")]
         public async Task<IActionResult> Upload([FromQuery] UploadProductImageCommandRequest uploadProductImageCommandRequest)
         {
@@ -94,7 +94,7 @@ namespace ETicaretAPI.API.Controllers
             UploadProductImageCommandResponse uploadProductImageCommandResponse = await _mediator.Send(uploadProductImageCommandRequest);
             return Ok();
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpDelete("[action]/{Id}")]
 
         public async Task<IActionResult> DeleteProductImage([FromRoute] 
@@ -104,7 +104,7 @@ namespace ETicaretAPI.API.Controllers
             RemoveProductImageCommandResponse removeProductImageCommand = await _mediator.Send(productImageCommandRequest);
             return Ok();
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetProductImages(string id)
         {
@@ -119,7 +119,7 @@ namespace ETicaretAPI.API.Controllers
                 p.FileName,
             }));
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpGet("[action]/{id}/{imageId}")]
         public async Task<IActionResult> DeleteProductImage(string id, string imageId)
         {
@@ -133,7 +133,7 @@ namespace ETicaretAPI.API.Controllers
             await _productWriteRepository.SaveAsync();
             return Ok();
         }
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         [HttpGet("[action]")]
         public async Task<IActionResult> ChangeShowCaseImage([FromQuery] 
         ChangeShowCaseImageCommandRequest changeShowCaseImageCommandRequest)
