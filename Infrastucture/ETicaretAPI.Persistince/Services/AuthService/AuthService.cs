@@ -73,7 +73,7 @@ namespace ETicaretAPI.Persistince.Services.AuthService
             else
                 throw new Exception("Invalid External authentication");
 
-            Token token = _tokenHandler.CreateAccessToken(5,user);
+            Token token = _tokenHandler.CreateAccessToken(10500505,user);
 
             await _userService.UpdateRefreshToken(token.RefreshToken, user.Id, token.Expiration);
 

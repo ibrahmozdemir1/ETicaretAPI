@@ -112,7 +112,7 @@ namespace ETicaretAPI.Persistince.Services
         {
             Basket? basket = await GetTargetBasket();
 
-            Basket? result = await _basketReadRepository.Table
+            Basket? result = _basketReadRepository.Table
                 .Include(b => b.BasketItems)
                 .ThenInclude(b => b.Product)
                 .FirstOrDefault(b => b.Id == basket.Id);

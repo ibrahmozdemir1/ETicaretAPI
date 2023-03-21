@@ -22,9 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPersistinceService();
+builder.Services.AddHttpContextAccessor();
 
 
-builder.Services.AddHttpClient();
 builder.Services.AddSignalRServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
@@ -33,8 +33,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost", "http://localhost:4200", "https://localhost:7220").AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowedToAllowWildcardSubdomains()
 ));
 
-builder.Services.AddHttpContextAccessor(); //Clientten gelen request neticsinde oluþturulan
-// HttpContext nesnesine katmanlardan eriþmemize saðlayan bir servistir.
+
 
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
     .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>()
@@ -94,6 +93,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             NameClaimType = ClaimTypes.Name,
         };
     });
+
 
 
 var app = builder.Build();
