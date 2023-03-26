@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETicaretAPI.Application.Features.Queries.Basket.GetBasketItems
+namespace ETicaretAPI.Application.Features.Commands.Order.CreateOrder
 {
-    internal class GetBasketItemQueryRequest
+    public class CreateOrderCommandResponse
     {
     }
 }

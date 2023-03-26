@@ -44,6 +44,7 @@ namespace ETicaretAPI.Persistince.Services
             _basketReadRepository = basketReadRepository;
         }
 
+
         private async Task<Basket> GetTargetBasket()
         {
             var username = _httpContextAccessor?.HttpContext?.User?.Identity?.Name;
@@ -139,6 +140,15 @@ namespace ETicaretAPI.Persistince.Services
             {
                 basketItems.Quantity = basketItem.Quantity;
                 await _basketItemWriteRepository.SaveAsync();
+            }
+        }
+
+        public Basket? GetUserActiveBasket
+        {
+            get
+            {
+                Basket? basket = GetTargetBasket().Result;
+                return basket;
             }
         }
     }

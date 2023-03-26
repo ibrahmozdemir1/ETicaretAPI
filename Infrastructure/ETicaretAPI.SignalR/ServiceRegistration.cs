@@ -14,6 +14,7 @@ namespace ETicaretAPI.SignalR
         public static void AddSignalRServices(this IServiceCollection collection)
         {
             collection.AddScoped<IProductHubService, ProductHubService>();
+            collection.AddScoped<IOrderHubService, OrderHubService>();
             collection.AddSignalR();
         }
     }
